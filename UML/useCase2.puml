@@ -1,0 +1,31 @@
+@startuml cryoUseCase2
+left to right direction
+actor User as u
+
+actor Admin as a
+right to left direction
+' package Admin {
+  
+' }
+package AttitudeCryo {
+  usecase "Register" as UC1
+  usecase "Login" as UC2
+  usecase "Search sessions" as UC3
+  usecase "Rate sessions" as UC4
+  usecase "Book sessions" as UC5
+  usecase "View history" as UC6
+  usecase "CRUD Sessions" as AC1
+  usecase "CRUD Users" as AC2
+  usecase "Add pictures" as AC3
+}
+u--> UC4
+u --> UC1
+u --> UC2
+u --> UC3
+u --> UC5
+u --> UC6
+a --> AC1
+a --> AC2
+a --> AC3
+
+@enduml

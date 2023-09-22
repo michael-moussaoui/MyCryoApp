@@ -1,0 +1,47 @@
+@startuml cryoSequence
+
+actor User
+participant Application as App
+participant Server as Server
+participant Database as DB
+
+User -> App: Accesses the application
+App -> Server: Sends request
+
+alt User is not authenticated
+    Server -> App: "You are not authenticated"
+    App -> User: Display message
+else User is authenticated
+    Server -> DB: Look up user data
+    DB --> Server: User data
+    Server -> App: User data
+
+    alt User performs Register action
+        Server -> App: Hash user's password
+        Server -> DB: Insert user data into database
+        DB --> Server: Registration success
+        Server -> App: Display "Registration success"
+    else User performs Login action
+        Server -> App: Look up user data
+        Server -> DB: Query user data by email
+        DB --> Server: User data
+        Server -> App: Compare hashed passwords
+
+        alt Passwords match
+            Server -> App: Generate JWT token
+            App -> Server: Set token in cookie
+            Server -> App: Display "Login success"
+        else Passwords do not match
+            Server -> App: Display "Password does not match"
+        end
+
+    end
+
+    User -> App: Logs out
+    App -> Server: Sends logout request
+    Server -> App: Clear token cookie
+    Server -> App: Display "Logout success"
+
+end
+
+@enduml

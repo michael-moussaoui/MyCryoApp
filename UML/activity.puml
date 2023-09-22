@@ -1,0 +1,51 @@
+@startuml cryoActivity
+
+|Start|
+:User accesses the application;
+:User is not authenticated;
+if (Token exists?) then (no)
+  :Display "You are not authenticated";
+  stop
+else (yes)
+  :Display user's first name;
+endif
+
+|Action|
+:User performs an action (e.g., register or login);
+
+|Action|
+if (Action is Register) then (yes)
+  :Hash the user's password;
+  :Insert user data into the database;
+  :Display "Registration success";
+else (no)
+  :Look up user data in the database;
+  if (User exists?) then (yes)
+    :Compare hashed passwords;
+    if (Passwords match?) then (yes)
+      :Generate JWT token;
+      :Set token in cookie;
+      :Display "Login success";
+    else (no)
+      :Display "Password does not match";
+    endif
+  else (no)
+    :Display "User not found";
+  endif
+endif
+
+|Action|
+:User logs out;
+
+|Decision|
+if (User logs out?) then (yes)
+  :Clear token cookie;
+  :Display "Logout success";
+else (no)
+  :Continue using the application;
+endif
+
+|End|
+|End|
+
+@enduml

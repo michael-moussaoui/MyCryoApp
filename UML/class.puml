@@ -1,0 +1,71 @@
+@startuml cryoClass
+
+class Session {
+    +ID: int
+    +name : string
+    +rate: string
+    +isRating: boolean
+    +date: date
+    +picture:string
+}
+
+class SessionSearch {
+  +ID : int
+  +objective : string
+}
+
+class SessionRating {
+  +ID: int
+  +session_isRating: int 
+  +session_date:date
+}
+
+class SessionPicture {
+  +ID : int
+  +session_ID : int
+  +name : string
+}
+
+class ObjectivesList {
+  +ID : int
+  +description : string
+  +orientation : string
+}
+
+class Category {
+  +ID : int
+  +nom : string
+}
+
+class User {
+  +ID : int
+  +prenom : string
+  +nom : string
+  +email : string
+  +password : string
+  +roles : string[]
+}
+
+
+SessionSearch "1" --> "many" ObjectivesList : has
+Category "1" --> "many" Session : has
+User "1" --> "many" Session : has
+User "1" --> "many" SessionRating : has
+Session "1" --> "many" SessionRating : has
+SessionPicture "1" --> "many" Session : has
+
+
+
+Session : +id_category
+Session : +id_user
+SessionRating : +id_session
+SessionRating : +id_user
+ObjectivesList : +id_séanceSearch
+
+
+
+
+@enduml
+
+
+
