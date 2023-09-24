@@ -1,26 +1,19 @@
-// import { Sequelize } from "sequelize";
 import { db } from "../../database/db.js";
 
 const { DataTypes } = Sequelize;
 
-const Users = db.define(
-	"users",
+const salt = 10;
+
+const User = db.define(
+	"User",
 	{
-		uuid: {
+		lastname: {
 			type: DataTypes.STRING,
-			defaultValue: DataTypes.UUIDV4,
 			allowNull: false,
-			validate: {
-				notEmpty: true,
-			},
 		},
-		name: {
+		lastname: {
 			type: DataTypes.STRING,
 			allowNull: false,
-			validate: {
-				notEmpty: true,
-				len: [3, 100],
-			},
 		},
 		email: {
 			type: DataTypes.STRING,
@@ -46,8 +39,26 @@ const Users = db.define(
 		},
 	},
 	{
+		paranoid: true,
 		freezeTableName: true,
-	}
+	},
+
+	User.beforeCreate(async (user, options) => {
+		let hash = await bcrypt.hash(user.password.toString(), salt);
+		user.password = hash;
+	}),
+
+	(User.checkPassword = async (password, originel) => {
+		return await bcrypt.compare(password, originel);
+	})
 );
 
-export default Users;
+db.sync({ alter: true })
+	.then(() => {
+		console.log("Tables created or updated.");
+	})
+	.catch((error) => {
+		console.error("Error synchronizing tables:", error);
+	});
+
+export default User;
