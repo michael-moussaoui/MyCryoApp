@@ -1,14 +1,23 @@
 import express from "express";
-import {
-	registerUser,
-	loginUser,
-	logoutUser,
-} from "../controllers/authController.js";
+import UserController from "../controllers/userController.js";
+import AuthMiddleware from "../middleware/authMiddleware.js";
 
-const userRouter = express.Router();
+const router = express.Router();
 
-userRouter.post("/register", registerUser);
-userRouter.post("/login", loginUser);
-userRouter.get("/logout", logoutUser);
+// Route pour l'inscription (register)
+router.post("/register", UserController.register);
 
-export default userRouter;
+// Route pour la connexion (login)
+router.post("/login", UserController.login);
+
+// Route pour la déconnexion (logout)
+router.get("/logout", AuthMiddleware, UserController.logout);
+
+router.get("/admin/dashboard", AuthMiddleware, (req, res) => {
+	// Route nécessite un utilisateur "ADMIN" pour y accéder
+	return res.json({
+		message: "Bienvenue sur le tableau de bord de l'administrateur",
+	});
+});
+
+export default router;
