@@ -1,0 +1,34 @@
+.navbar {
+	position: fixed;
+	width: 100%;
+	display: flex;
+	padding: 20px;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 2px solid theme(colors.soft-color);
+	background-color: #547;
+	z-index: 50;
+}
+
+.logo {
+	width: 130px;
+}
+
+.icons {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.user {
+	display: flex;
+	align-items: center;
+}
+
+/* .icon__user {
+	background: theme(colors.brown);
+} */
+
+.icons__button {
+	background: transparent;
+}

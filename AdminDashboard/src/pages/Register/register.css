@@ -1,0 +1,35 @@
+.register {
+	@apply min-h-screen bg-soft-bg flex  flex-col;
+}
+
+.register__logo {
+	@apply w-60 ml-5 mt-5;
+}
+
+.register__title {
+	@apply relative w-56 mx-auto top-5 flex justify-center p-5 rounded-sm text-brown shadow-sm shadow-[black];
+}
+
+.register__form {
+	@apply relative top-10  mx-auto w-1/2 px-3  flex justify-center flex-col rounded-sm shadow-md shadow-[black];
+}
+
+.form__input {
+	@apply w-[80%] mx-auto;
+}
+
+input {
+	@apply w-full h-10 my-3 rounded-md;
+}
+
+.form__button {
+	@apply w-48 mx-auto h-12 mb-5 rounded-md text-base cursor-pointer;
+}
+
+p {
+	@apply w-60 mx-auto mb-5 flex justify-center;
+}
+
+.link {
+	@apply text-soft-color font-bold ml-1;
+}

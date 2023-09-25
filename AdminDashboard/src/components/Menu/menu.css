@@ -1,0 +1,17 @@
+.menu {
+	position: fixed;
+	margin-top: 20vh;
+	border-right: 1px solid theme(colors.soft-color);
+}
+
+.menu__item {
+	@apply flex flex-col gap-3 mb-5 border-r-2 border-r-brown;
+}
+
+.item__title {
+	@apply text-sm font-light text-brown;
+}
+.listItem {
+	@apply flex items-center gap-3 p-3
+            hover:bg-soft-bg;
+}

@@ -1,0 +1,30 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.main {
+	@apply bg-main-bg text-main-color min-h-screen;
+}
+
+.container {
+	@apply flex;
+}
+
+.menuContainer {
+	@apply w-[250px] px-2 py-5 border-r-2 border-r-soft-color;
+}
+
+.contentContainer {
+	@apply px-2 py-5 w-full;
+}
+
+.test {
+	@apply relative w-3/4 h-80 mx-auto -translate-x-1/2 top-36;
+}
