@@ -1,0 +1,17 @@
+.container__sessions {
+	margin-top: 20vh;
+}
+table {
+	width: 100%;
+
+	border: 2px solid theme(colors.brown);
+}
+th {
+	padding: 1.5rem;
+	text-align: start;
+}
+
+td {
+	border-top: 2px solid theme(colors.brown);
+	padding: 0.5rem;
+}

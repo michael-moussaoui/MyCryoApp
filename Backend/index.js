@@ -8,6 +8,9 @@ import dotenv from "dotenv";
 
 import { DB, db } from "./database/db.js";
 
+import sessionRoutes from "./routes/sessions/sessionRoute.js";
+import userRoutes from "./routes/userRoute.js";
+
 const salt = 10;
 
 dotenv.config();
@@ -119,6 +122,9 @@ app.get("/logout", (req, res) => {
 	res.clearCookie("token");
 	return res.json({ Status: "Success" });
 });
+
+app.use(sessionRoutes);
+app.use(userRoutes);
 
 DB.sync()
 	.then(() => console.log("database connection OK"))

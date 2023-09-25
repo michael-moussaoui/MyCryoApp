@@ -8,8 +8,8 @@ import {
 // import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/Home/Home";
-// import Users from "./pages/Users/Users";
-// import Sessions from "./pages/Sessions/Sessions";
+import Users from "./pages/Users/Users";
+import Sessions from "./pages/Sessions/Sessions";
 import Navbar from "./components/Navbar/Navbar";
 import Menu from "./components/Menu/Menu";
 import Footer from "./components/Footer/Footer";
@@ -53,14 +53,14 @@ function App() {
 					path: "/home",
 					element: <Home />,
 				},
-				// {
-				// 	path: "/users",
-				// 	element: <Users />,
-				// },
-				// {
-				// 	path: "/sessions",
-				// 	element: <Sessions />,
-				// },
+				{
+					path: "/users",
+					element: <Users />,
+				},
+				{
+					path: "/sessions",
+					element: <Sessions />,
+				},
 			],
 		},
 

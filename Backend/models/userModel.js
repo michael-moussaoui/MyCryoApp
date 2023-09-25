@@ -1,12 +1,12 @@
 import { Sequelize } from "sequelize";
-import { db } from "../database/db.js";
+import { DB } from "../database/db.js";
 
 const { DataTypes } = Sequelize;
 
-const User = db.define(
+const User = DB.define(
 	"User",
 	{
-		lastname: {
+		firstname: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
@@ -44,7 +44,7 @@ const User = db.define(
 	}
 );
 
-db.sync({ alter: true })
+DB.sync({ alter: true })
 	.then(() => {
 		console.log("Tables created or updated.");
 	})

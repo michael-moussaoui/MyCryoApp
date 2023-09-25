@@ -1,9 +1,9 @@
 import Sequelize from "sequelize";
-import { db } from "../../database/db.js";
+import { DB } from "../../database/db.js";
 
 const { DataTypes } = Sequelize;
 
-const Session = db.define(
+const Session = DB.define(
 	"Session",
 	{
 		id: {
@@ -49,7 +49,7 @@ const Session = db.define(
 	}
 );
 
-db.sync({ alter: true })
+DB.sync({ alter: true })
 	.then(() => {
 		console.log("Tables created or updated");
 	})
