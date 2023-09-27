@@ -1,30 +1,29 @@
-import Sequelize from "sequelize";
-import { db } from "../../database/db.js";
+import { DataTypes } from "sequelize";
 
-const { DataTypes } = Sequelize;
-
-const SessionRating = db.define(
-	"SessionRating",
-	{
-		id: {
-			type: DataTypes.INTEGER,
-			primaryKey: true,
-			autoIncrement: true,
-			allowNull: false,
+export default (sequelize) => {
+	const SessionRating = sequelize.define(
+		"SessionRating",
+		{
+			id: {
+				type: DataTypes.INTEGER,
+				primaryKey: true,
+				autoIncrement: true,
+				allowNull: false,
+			},
+			user_id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+			},
+			session_id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+			},
 		},
-	},
-	{
-		paranoid: true,
-		timestamps: true,
-	}
-);
+		{
+			paranoid: true,
+			timestamps: true,
+		}
+	);
 
-db.sync({ alter: true })
-	.then(() => {
-		console.log("Tables created or updated");
-	})
-	.catch((err) => {
-		console.log("Error synchronizing tables:", err);
-	});
-
-export default SessionRating;
+	return SessionRating;
+};

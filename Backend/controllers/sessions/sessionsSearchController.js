@@ -1,4 +1,6 @@
-import SessionSearch from "../../models/sessions/sessionSearchModel.js";
+import db from "../../database/db.js";
+
+const SessionSearch = db.SessionSearch;
 
 export const getAllSessionsSearch = async (req, res) => {
 	try {

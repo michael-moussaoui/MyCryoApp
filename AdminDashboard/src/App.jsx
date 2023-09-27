@@ -15,11 +15,6 @@ import Menu from "./components/Menu/Menu";
 import Footer from "./components/Footer/Footer";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-// import Welcome from "./components/Layout/Welcome";
-// import AddSession from "./components/Session/AddSession";
-// import EditSession from "./components/Session/EditSession";
-// import ViewSession from "./components/Session/ViewSession";
-// import Read from "./pages/Read/Read";
 
 function App() {
 	const Layout = () => {

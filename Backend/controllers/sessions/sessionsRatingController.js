@@ -1,4 +1,6 @@
-import SessionRating from "../../models/sessions/sessionRatingModel.js";
+import db from "../../database/db.js";
+
+const SessionRating = db.SessionRating;
 
 export const getAllSessionsRating = async (req, res) => {
 	try {

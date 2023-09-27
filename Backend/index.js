@@ -6,10 +6,15 @@ import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
-import { DB, db } from "./database/db.js";
+import DB from "./database/db.js";
 
-import sessionRoutes from "./routes/sessions/sessionRoute.js";
 import userRoutes from "./routes/userRoute.js";
+import objectiveRoutes from "./routes/objectiveRoute.js";
+import categoryRoutes from "./routes/categoryRoute.js";
+import sessionRoutes from "./routes/sessions/sessionRoute.js";
+import sessionPictureRoutes from "./routes/sessions/sessionPictureRoute.js";
+import sessionRatingRoutes from "./routes/sessions/sessionRatingRoute.js";
+import sessionSearchRoutes from "./routes/sessions/sessionSearchRoute.js";
 
 const salt = 10;
 
@@ -34,7 +39,7 @@ const verifyUser = (req, res, next) => {
 	if (!token) {
 		return res.json({ Error: "You are not authentincated" });
 	} else {
-		jwt.verify(token, "jwt-secret-key", (err, decoded) => {
+		jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
 			if (err) {
 				return res.json({ Error: "Token is not OK" });
 			} else {
@@ -72,7 +77,7 @@ app.post("/register", (req, res) => {
 			req.body.email,
 			hash,
 		];
-		db.query(sql, [values], (err, result) => {
+		DB.sequelize.query(sql, [values], (err, result) => {
 			if (err) {
 				console.error("SQL Error:", err.message);
 				return res.json({ Error: "Inserting data Error in server" });
@@ -82,40 +87,45 @@ app.post("/register", (req, res) => {
 	});
 });
 
-app.post("/login", (req, res) => {
-	const sql = "SELECT * FROM userss WHERE email = ?";
-	db.query(sql, [req.body.email], (err, data) => {
-		if (err) return res.json({ Error: "Login error in server" });
-		if (data.length > 0) {
-			bcrypt.compare(
-				req.body.password.toString(),
-				data[0].password,
-				(err, response) => {
-					if (err)
-						return res.json({ Error: "Password compare error" });
-					if (response) {
-						const firstname = data[0].firstname;
-						const role = data[0].role;
-						const token = jwt.sign(
-							{ firstname, role },
-							"jwt-secret-key",
-							{
-								expiresIn: "1d",
-							}
-						);
-						res.cookie("token", token);
-						return res.json({
-							Status: "Success",
-						});
-					} else {
-						return res.json({ Error: "Password not matched" });
-					}
-				}
-			);
-		} else {
+app.post("/login", async (req, res) => {
+	try {
+		const user = await DB.User.findOne({
+			where: {
+				email: req.body.email,
+			},
+		});
+
+		if (!user) {
 			return res.json({ Error: "No email existed" });
 		}
-	});
+
+		const isPasswordValid = await bcrypt.compare(
+			req.body.password.toString(),
+			user.password
+		);
+
+		if (isPasswordValid) {
+			const { firstname, role } = user;
+			console.log("User role:", role);
+			const token = jwt.sign(
+				{ firstname, role },
+				process.env.JWT_SECRET,
+				{
+					expiresIn: "1d",
+				}
+			);
+
+			res.cookie("token", token);
+			return res.json({
+				Status: "Success",
+			});
+		} else {
+			return res.json({ Error: "Password not matched" });
+		}
+	} catch (err) {
+		console.error(err);
+		return res.json({ Error: "Login error in server" });
+	}
 });
 
 app.get("/logout", (req, res) => {
@@ -123,10 +133,16 @@ app.get("/logout", (req, res) => {
 	return res.json({ Status: "Success" });
 });
 
-app.use(sessionRoutes);
 app.use(userRoutes);
+app.use(categoryRoutes);
+app.use(objectiveRoutes);
+app.use(sessionRoutes);
+app.use(sessionPictureRoutes);
+app.use(sessionRatingRoutes);
+app.use(sessionSearchRoutes);
 
-DB.sync()
+DB.sequelize
+	.sync()
 	.then(() => console.log("database connection OK"))
 	.then(() => {});
 app.listen(process.env.SERVER_PORT, () => {

@@ -1,60 +1,39 @@
-import Sequelize from "sequelize";
-import { DB } from "../../database/db.js";
+import { DataTypes } from "sequelize";
 
-const { DataTypes } = Sequelize;
+export default (sequelize) => {
+	const Session = sequelize.define(
+		"Session",
+		{
+			user_id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+			},
+			category_id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+			},
+			name: {
+				type: DataTypes.STRING,
+				defaultValue: "",
+				allowNull: false,
+			},
+			rate: {
+				type: DataTypes.STRING,
+				defaultValue: "",
+				allowNull: false,
+			},
+			comment: {
+				type: DataTypes.TEXT,
+				defaultValue: "",
+				allowNull: false,
+			},
+			isRating: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+			},
+		},
+		{ paranoid: true }
+	);
 
-const Session = DB.define(
-	"Session",
-	{
-		id: {
-			type: DataTypes.INTEGER,
-			primaryKey: true,
-			autoIncrement: true,
-			allowNull: false,
-		},
-		// category_id: {
-		// 	type: DataTypes.INTEGER,
-		// 	allowNull: false,
-		// },
-
-		createdAt: {
-			type: DataTypes.DATE,
-			defaultValue: DataTypes.NOW,
-			allowNull: true,
-		},
-		isRating: {
-			type: DataTypes.BOOLEAN,
-		},
-		comment: {
-			type: DataTypes.TEXT,
-			defaultValue: "",
-			allowNull: false,
-		},
-		rate: {
-			type: DataTypes.STRING,
-			allowNull: true,
-		},
-		// user_id: {
-		// 	type: DataTypes.INTEGER,
-		// 	allowNull: false,
-		// },
-
-		name: {
-			type: DataTypes.STRING,
-		},
-	},
-	{
-		paranoid: true,
-		timestamps: true,
-	}
-);
-
-DB.sync({ alter: true })
-	.then(() => {
-		console.log("Tables created or updated");
-	})
-	.catch((err) => {
-		console.log("Error synchronizing tables:", err);
-	});
-
-export default Session;
+	return Session;
+};

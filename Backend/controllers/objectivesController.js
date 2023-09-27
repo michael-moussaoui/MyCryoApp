@@ -1,4 +1,6 @@
-import Objective from "../../models/objectiveModel.js";
+import db from "../database/db.js";
+
+const Objective = db.Objective;
 
 export const getAllObjectives = async (req, res) => {
 	try {

@@ -1,4 +1,6 @@
-import Category from "../../models/CategoryModel.js";
+import db from "../database/db.js";
+
+const Category = db.Category;
 
 export const getAllCategories = async (req, res) => {
 	try {

@@ -1,4 +1,6 @@
-import Session from "../../models/sessions/sessionModel.js";
+import db from "../../database/db.js";
+
+const Session = db.Session;
 
 export const getAllSessions = async (req, res) => {
 	try {

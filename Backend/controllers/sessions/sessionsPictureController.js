@@ -1,8 +1,10 @@
-import SessionPicture from "../../models/sessions/sessionPictureModel.js";
+import db from "../../database/db.js";
+
+const SessionPicture = db.SessionPicture;
 
 export const getAllSessionsPicture = async (req, res) => {
 	try {
-		const sessionsPicture = await Session.findAll();
+		const sessionsPicture = await SessionPicture.findAll();
 		console.log("SessionsPicture:", sessionsPicture);
 		res.json(sessions);
 	} catch (error) {

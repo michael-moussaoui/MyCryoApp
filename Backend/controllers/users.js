@@ -1,5 +1,7 @@
-import User from "../models/userModel.js";
+import db from "../database/db.js";
 import bcrypt from "bcrypt";
+
+const User = db.User;
 
 const UserController = {
 	async getUsers(req, res) {
@@ -75,11 +77,11 @@ const UserController = {
 					.json({ message: "Utilisateur non trouvé" });
 			}
 
-			// Mettez à jour les informations de l'utilisateur
+			// Mettre à jour les informations de l'utilisateur
 			existingUser.firstname = firstname;
 			existingUser.lastname = lastname;
 			existingUser.email = email;
-			existingUser.password = password; // Vous pouvez gérer la mise à jour du mot de passe ici
+			existingUser.password = password; //  Gérer la mise à jour du mot de passe ici
 			existingUser.role = role;
 
 			// Enregistrez les modifications
